@@ -1,12 +1,26 @@
 research_task:
   description: >
     Conduct a thorough research about {company_name}
-    Make sure you find the relevant information from all verified sources.
+    Make sure you find the relevant information from all available sources.
+    Don't make any asumptions and if you don't find anything which is required to complete the research
+    then use the links mentioned in the user_preference.txt file under knowledge folder.
   expected_output: >
     Most relevant information about {company_name} without making any assumptions and must include below parameters; 
-    Company website, Company Founders, Year Founded, Headquarters, Number of Employees, Global Presence, Leadership Team, Company Type, Services, Products, 
+    Company website, Company Founders, Company Founders LinkedIn Profile URL, Year Founded, Headquarters, Number of Employees, 
+    Global Presence, Leadership Team, Company Type, Services, Products, 
     Competitors, Tech Partners, Client Names, top 5 news and press. 
   agent: researcher
+
+linkedin_research_task:
+  description: >
+    Conduct a thorough research about company_founders which you received from researcher.
+    Make sure you find the relevant profile from linkedin.
+    Don't make any asumptions in profile consideration and do the thorough research on linked to make the best 
+    suitable profile.
+  expected_output: >
+    A most suitable Linkedin profile URL of the founders, if there are multiple founder provide
+    each founder profile comma seprated.  
+  agent: linkedin_profile_researcher
 
 reporting_task:
   description: >
@@ -14,5 +28,21 @@ reporting_task:
     Make sure the report is detailed and contains any and all relevant information.
   expected_output: >
     A fully fledged report with the main parameters, each with a full section of information.
+    Follow the below structure:
+    * Company website:
+    * Company Founders:
+    * Company Founders LinkedIn Profile URLs:
+    * Year Founded:
+    * Headquarters:
+    * Number of Employees:
+    * Global Presence:
+    * Leadership Team:
+    * Company Type:
+    * Services:
+    * Products:
+    * Competitors:
+    * Tech Partners:
+    * Client Names:
+    * Top 5 news and press:
     Formatted as markdown without '```'
   agent: reporting_analyst

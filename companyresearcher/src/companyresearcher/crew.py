@@ -1,8 +1,8 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+from tools.custom_tool import LinkedInSearchTool
 from dotenv import load_dotenv
-
 load_dotenv()
 
 # If you want to run a snippet of code before or after the crew starts,
@@ -11,6 +11,7 @@ load_dotenv()
 
 search_tool = SerperDevTool()
 scrape_tool = ScrapeWebsiteTool()
+linked_tool = LinkedInSearchTool()
 
 @CrewBase
 class Companyresearcher():
@@ -31,7 +32,14 @@ class Companyresearcher():
             tools=[search_tool, scrape_tool],
             verbose=True
         )
-    
+
+    @agent
+    def linkedin_profile_researcher(self) -> Agent:
+        return Agent(
+            config=self.agents_config['linkedin_profile_researcher'],
+            tools=[linked_tool],
+            verbose=True
+        )
     # Can add Analysis agent which will analyse the content received by researcher agent
 
     @agent
@@ -48,6 +56,12 @@ class Companyresearcher():
     def research_task(self) -> Task:
         return Task(
             config=self.tasks_config['research_task'],
+        )
+
+    @task
+    def linkedin_research_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['linkedin_research_task'],
         )
 
     @task
